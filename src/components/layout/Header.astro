@@ -1,0 +1,38 @@
+---
+import type { Inn, Lang } from '../../lib/types';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  inn: Inn;
+  lang: Lang;
+  /** 言語切替の遷移先（宿ページ / 詳細ページなど呼び出し側で決める） */
+  altHref: string;
+}
+
+const { inn, lang, altHref } = Astro.props;
+const name = lang === 'en' ? inn.header.nameEn || inn.header.nameJa : inn.header.nameJa;
+const subname = lang === 'en' ? inn.header.nameJa : inn.header.nameEn;
+---
+
+<header
+  class="sticky top-0 z-30 border-b border-[color:var(--color-border)] bg-[color:var(--color-surface)]/85 backdrop-blur"
+>
+  <div class="mx-auto max-w-screen-md px-4 py-3 flex items-center justify-between gap-3">
+    <div class="min-w-0">
+      <p class="text-[10px] tracking-[0.2em] uppercase text-[color:var(--color-muted)]">
+        Guest Guide
+      </p>
+      <h1 class="text-base sm:text-lg font-semibold leading-tight truncate">
+        <a href={lang === 'en' ? `/g/${inn.slug}/en/` : `/g/${inn.slug}/`} class="hover:opacity-80">
+          {name}
+        </a>
+      </h1>
+      {subname && subname !== name && (
+        <p class="text-[11px] text-[color:var(--color-muted)] leading-tight truncate">
+          {subname}
+        </p>
+      )}
+    </div>
+    <LanguageSwitcher altHref={altHref} current={lang} />
+  </div>
+</header>

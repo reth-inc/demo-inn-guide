@@ -1,0 +1,88 @@
+---
+import type { Inn, Lang } from '../../lib/types';
+import { dict } from '../../lib/i18n';
+import { nonEmpty } from '../../lib/helpers';
+
+interface Props {
+  inn: Inn;
+  lang: Lang;
+}
+
+const { inn, lang } = Astro.props;
+const d = dict(lang);
+const f = inn.footer;
+const address = lang === 'en' ? f.addressEn || f.addressJa : f.addressJa;
+---
+
+<footer class="mt-12 border-t border-[color:var(--color-border)] bg-[color:var(--color-surface-2)]">
+  <div class="mx-auto max-w-screen-md px-4 py-8 space-y-6">
+    <h2 class="text-sm font-semibold tracking-wider text-[color:var(--color-ink-2)] uppercase">
+      {d.sections.contact}
+    </h2>
+
+    <dl class="grid grid-cols-1 gap-4 text-sm">
+      <div>
+        <dt class="text-xs text-[color:var(--color-muted)] mb-1">{d.footer.address}</dt>
+        <dd class="text-[color:var(--color-ink)] leading-relaxed">{address}</dd>
+      </div>
+      {nonEmpty(f.phone) && (
+        <div>
+          <dt class="text-xs text-[color:var(--color-muted)] mb-1">{d.footer.phone}</dt>
+          <dd>
+            <a
+              href={`tel:${f.phone.replace(/[^0-9+]/g, '')}`}
+              class="text-[color:var(--color-accent-2)] underline underline-offset-2 hover:opacity-80"
+            >
+              {f.phone}
+            </a>
+          </dd>
+        </div>
+      )}
+      {nonEmpty(f.email) && (
+        <div>
+          <dt class="text-xs text-[color:var(--color-muted)] mb-1">{d.footer.email}</dt>
+          <dd>
+            <a
+              href={`mailto:${f.email}`}
+              class="text-[color:var(--color-accent-2)] underline underline-offset-2 hover:opacity-80 break-all"
+            >
+              {f.email}
+            </a>
+          </dd>
+        </div>
+      )}
+    </dl>
+
+    <div class="flex flex-wrap gap-2 pt-2">
+      {nonEmpty(f.instagramUrl) && (
+        <a
+          href={f.instagramUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={d.actions.openInstagram}
+          class="tap inline-flex size-11 items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-[color:var(--color-ink-2)] hover:bg-[color:var(--color-surface-2)]"
+        >
+          <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
+          </svg>
+        </a>
+      )}
+      {nonEmpty(f.lineUrl) && (
+        <a
+          href={f.lineUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={d.actions.openLine}
+          class="tap inline-flex size-11 items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] text-[color:var(--color-ink-2)] hover:bg-[color:var(--color-surface-2)]"
+        >
+          <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 11.5c0-4.418-4.03-8-9-8s-9 3.582-9 8c0 3.94 3.224 7.236 7.5 7.892V22l4.2-2.8c3.62-.6 6.3-3.51 6.3-7.7Z" />
+          </svg>
+        </a>
+      )}
+    </div>
+
+  </div>
+</footer>

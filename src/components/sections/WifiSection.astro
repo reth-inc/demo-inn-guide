@@ -1,0 +1,143 @@
+---
+import type { Lang, WifiInfo } from '../../lib/types';
+import { dict } from '../../lib/i18n';
+import Card from '../blocks/Card.astro';
+
+interface Props {
+  wifi: WifiInfo;
+  lang: Lang;
+}
+
+const { wifi, lang } = Astro.props;
+const d = dict(lang);
+---
+
+<section id="wifi" class="px-4 sm:px-0">
+  <Card class="overflow-hidden">
+    <dl class="space-y-3">
+      <div>
+        <dt class="text-xs font-medium text-[color:var(--color-muted)] uppercase tracking-wide">
+          {d.wifi.ssid}
+        </dt>
+        <dd class="font-mono text-base text-[color:var(--color-ink)] break-all select-all leading-snug">
+          {wifi.ssid}
+        </dd>
+      </div>
+
+      <div class="flex items-end justify-between gap-3">
+        <div class="min-w-0 flex-1">
+          <dt class="text-xs font-medium text-[color:var(--color-muted)] uppercase tracking-wide">
+            {d.wifi.password}
+          </dt>
+          <dd class="font-mono text-base text-[color:var(--color-ink)] break-all select-all leading-snug">
+            {wifi.password}
+          </dd>
+        </div>
+        <button
+          type="button"
+          class="copy-btn tap shrink-0 inline-flex items-center gap-1.5 rounded-xl border border-transparent bg-[color:var(--color-accent-2)] px-3 py-2 text-xs font-medium text-white hover:bg-[color:var(--color-accent)] transition-colors"
+          data-copy={wifi.password}
+          data-copied-label={d.wifi.copied}
+          aria-label={`${d.wifi.copy} ${d.wifi.password}`}
+        >
+          <svg
+            data-icon-default
+            viewBox="0 0 24 24"
+            class="size-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+          </svg>
+          <svg
+            data-icon-copied
+            viewBox="0 0 24 24"
+            class="size-4 hidden"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span data-copy-text>{d.wifi.copy}</span>
+        </button>
+      </div>
+    </dl>
+  </Card>
+</section>
+
+<script>
+  /**
+   * Wi-Fi 情報をクリップボードにコピーする最小実装。
+   * - Clipboard API を優先し、失敗時は textarea + execCommand にフォールバック
+   * - 1.5 秒間「コピーしました」表示後に元に戻す
+   */
+  const COPIED_RESET_MS = 1500;
+
+  type CopyButton = HTMLButtonElement & { dataset: DOMStringMap };
+
+  async function copyToClipboard(value: string): Promise<boolean> {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(value);
+        return true;
+      }
+    } catch {
+      // fallthrough
+    }
+    // フォールバック (HTTP / 古い Safari 等)
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = value;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      ta.style.pointerEvents = 'none';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, value.length);
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch {
+      return false;
+    }
+  }
+
+  function showCopied(btn: CopyButton) {
+    const textEl = btn.querySelector<HTMLElement>('[data-copy-text]');
+    const iconDefault = btn.querySelector<HTMLElement>('[data-icon-default]');
+    const iconCopied = btn.querySelector<HTMLElement>('[data-icon-copied]');
+    if (!textEl) return;
+
+    const original = textEl.textContent ?? '';
+    const copied = btn.dataset.copiedLabel ?? 'Copied';
+
+    textEl.textContent = copied;
+    iconDefault?.classList.add('hidden');
+    iconCopied?.classList.remove('hidden');
+
+    window.setTimeout(() => {
+      textEl.textContent = original;
+      iconDefault?.classList.remove('hidden');
+      iconCopied?.classList.add('hidden');
+    }, COPIED_RESET_MS);
+  }
+
+  document.querySelectorAll<CopyButton>('button.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const value = btn.dataset.copy ?? '';
+      if (!value) return;
+      const ok = await copyToClipboard(value);
+      if (ok) showCopied(btn);
+    });
+  });
+</script>

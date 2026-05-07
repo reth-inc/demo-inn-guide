@@ -1,0 +1,26 @@
+---
+import '../../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  lang: 'ja' | 'en';
+}
+
+const { title, description, lang } = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fbfaf7" />
+    <meta name="format-detection" content="telephone=no" />
+    {description && <meta name="description" content={description} />}
+    <title>{title}</title>
+  </head>
+  <body class="bg-[color:var(--color-bg)] text-[color:var(--color-ink)]">
+    <slot />
+  </body>
+</html>

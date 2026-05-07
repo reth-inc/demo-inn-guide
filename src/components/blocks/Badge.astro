@@ -1,0 +1,24 @@
+---
+interface Props {
+  /** 色のトーン */
+  tone?: 'neutral' | 'accent' | 'warning';
+  class?: string;
+}
+
+const { tone = 'neutral', class: className = '' } = Astro.props;
+
+const toneClass = {
+  neutral:
+    'bg-[color:var(--color-surface-2)] text-[color:var(--color-ink-2)] border-[color:var(--color-border)]',
+  accent:
+    'bg-[color:var(--color-accent-soft)] text-[color:var(--color-accent-2)] border-[color:var(--color-accent-soft)]',
+  warning:
+    'bg-[color:var(--color-warning-soft)] text-[color:var(--color-warning)] border-[color:var(--color-warning-soft)]',
+}[tone];
+---
+
+<span
+  class={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium ${toneClass} ${className}`}
+>
+  <slot />
+</span>

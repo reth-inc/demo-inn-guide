@@ -1,0 +1,87 @@
+---
+import type { Inn, Lang, Section } from '../../lib/types';
+import { dict } from '../../lib/i18n';
+import { altSectionPath, innPath } from '../../lib/helpers';
+import BaseLayout from './BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import TimesSection from '../sections/TimesSection.astro';
+import ServicesSection from '../sections/ServicesSection.astro';
+import AreaSection from '../sections/AreaSection.astro';
+import FaqSection from '../sections/FaqSection.astro';
+
+interface Props {
+  inn: Inn;
+  lang: Lang;
+  section: Section;
+}
+
+const { inn, lang, section } = Astro.props;
+const d = dict(lang);
+
+const innName =
+  lang === 'en' ? inn.header.nameEn || inn.header.nameJa : inn.header.nameJa;
+const sectionLabel = d.sections[section];
+const pageTitle = `${sectionLabel} | ${innName}`;
+const pageDesc = `${innName} - ${sectionLabel}`;
+const altHref = altSectionPath(inn.slug, section, lang);
+const backHref = innPath(inn.slug, lang);
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} lang={lang}>
+  <Header inn={inn} lang={lang} altHref={altHref} />
+
+  <main class="mx-auto max-w-screen-md pb-8">
+    {/* 戻るリンク */}
+    <div class="px-4 pt-4">
+      <a
+        href={backHref}
+        class="tap inline-flex items-center gap-1.5 text-xs font-medium text-[color:var(--color-ink-2)] hover:text-[color:var(--color-accent-2)]"
+      >
+        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        {d.actions.back}
+      </a>
+    </div>
+
+    {/* ヒーロー（セクション名） */}
+    <section class="px-4 pt-5 pb-6">
+      <h2 class="text-2xl sm:text-3xl font-semibold leading-tight">
+        {sectionLabel}
+      </h2>
+    </section>
+
+    {/* セクション本体（見出しはヒーローで出すので showTitle=false） */}
+    {section === 'times' && (
+      <TimesSection items={inn.times} lang={lang} showTitle={false} />
+    )}
+    {section === 'services' && (
+      <ServicesSection items={inn.services} lang={lang} showTitle={false} />
+    )}
+    {section === 'additional' && (
+      <ServicesSection items={inn.additional} lang={lang} showTitle={false} />
+    )}
+    {section === 'area' && (
+      <AreaSection items={inn.area} lang={lang} showTitle={false} />
+    )}
+    {section === 'faq' && (
+      <FaqSection items={inn.faq} lang={lang} showTitle={false} />
+    )}
+
+    {/* 下部の戻るリンク */}
+    <div class="px-4 mt-12 pt-6 border-t border-[color:var(--color-border)]">
+      <a
+        href={backHref}
+        class="tap inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--color-accent-2)] hover:opacity-80"
+      >
+        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+        {d.actions.back}
+      </a>
+    </div>
+  </main>
+
+  <Footer inn={inn} lang={lang} />
+</BaseLayout>

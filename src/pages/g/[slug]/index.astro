@@ -1,0 +1,17 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getAllInns, getInnBySlug } from '../../../data/inns';
+import InnPage from '../../../components/layout/InnPage.astro';
+
+export const getStaticPaths = (() => {
+  return getAllInns().map((inn) => ({ params: { slug: inn.slug } }));
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const inn = getInnBySlug(slug!);
+if (!inn) {
+  return Astro.redirect('/');
+}
+---
+
+<InnPage inn={inn} lang="ja" />

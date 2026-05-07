@@ -1,0 +1,39 @@
+---
+import type { Lang } from '../../lib/types';
+import { dict } from '../../lib/i18n';
+
+interface Props {
+  /** 反対言語ページの URL（呼び出し側で計算する） */
+  altHref: string;
+  /** 現在の言語 */
+  current: Lang;
+}
+
+const { altHref, current } = Astro.props;
+const d = dict(current);
+const altLabel = current === 'ja' ? 'EN' : 'JA';
+---
+
+<a
+  href={altHref}
+  class="tap inline-flex items-center gap-1 rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-3 py-1.5 text-xs font-medium text-[color:var(--color-ink-2)] hover:bg-[color:var(--color-surface-2)] transition-colors"
+  aria-label={d.langLabel}
+>
+  <svg
+    class="size-4 opacity-70"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18" />
+    <path d="M12 3a14 14 0 0 1 0 18" />
+    <path d="M12 3a14 14 0 0 0 0 18" />
+  </svg>
+  <span>{altLabel}</span>
+  <span class="sr-only">{d.langSwitch}</span>
+</a>

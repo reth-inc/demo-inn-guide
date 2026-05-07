@@ -1,0 +1,58 @@
+---
+import type { Lang, TimeItem } from '../../lib/types';
+import { dict } from '../../lib/i18n';
+import { nonEmpty, pickText, visibleSorted } from '../../lib/helpers';
+import SectionTitle from '../common/SectionTitle.astro';
+import Card from '../blocks/Card.astro';
+
+interface Props {
+  items: TimeItem[];
+  lang: Lang;
+  showTitle?: boolean;
+}
+
+const { items, lang, showTitle = true } = Astro.props;
+const d = dict(lang);
+const visible = visibleSorted(items);
+---
+
+{visible.length > 0 && (
+  <section class="px-4 sm:px-0">
+    {showTitle && <SectionTitle title={d.sections.times} eyebrow="SCHEDULE" />}
+
+    <Card padded={false}>
+      <ul class="divide-y divide-[color:var(--color-border)]">
+        {visible.map((item) => {
+          const title = pickText(lang, item.titleJa, item.titleEn);
+          const body = pickText(lang, item.bodyJa, item.bodyEn);
+          return (
+            <li class="p-4 sm:p-5 flex items-start gap-3">
+              <span
+                class="mt-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-accent-soft)] text-[color:var(--color-accent-2)]"
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <polyline points="12 7 12 12 15 14" />
+                </svg>
+              </span>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-baseline justify-between gap-3 flex-wrap">
+                  <h3 class="font-medium text-[color:var(--color-ink)] leading-tight">{title}</h3>
+                  <p class="font-mono text-sm text-[color:var(--color-accent-2)] tracking-tight">
+                    {item.time}
+                  </p>
+                </div>
+                {nonEmpty(body) && (
+                  <p class="mt-1 text-sm text-[color:var(--color-ink-2)] leading-relaxed whitespace-pre-line">
+                    {body}
+                  </p>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </Card>
+  </section>
+)}

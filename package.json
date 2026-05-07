@@ -1,0 +1,25 @@
+{
+  "name": "demo-inn-guide",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "宿泊施設向け 多言語館内案内サイト（デモ）",
+  "scripts": {
+    "dev": "astro dev",
+    "dev:lan": "astro dev --host",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^5.1.1",
+    "@tailwindcss/vite": "^4.0.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.7.2"
+  }
+}
