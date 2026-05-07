@@ -85,7 +85,6 @@ npm run check     # astro check による型・テンプレート検査
 - http://localhost:4321/g/iriyamato/en/
 - http://localhost:4321/g/iriyamato/services/
 - http://localhost:4321/g/iriyamato/en/faq/
-- http://localhost:4321/g/sample-inn/area/
 
 ## ディレクトリ構成
 
