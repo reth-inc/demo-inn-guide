@@ -11,8 +11,8 @@ export const inns: Inn[] = [
   {
     slug: 'iriyamato',
     header: {
-      nameJa: '入山登 旅館',
-      nameEn: 'Iriyamato Ryokan',
+      nameJa: '入山登',
+      nameEn: 'Iriyamato',
     },
     wifi: {
       ssid: 'iriyamato-guest',
