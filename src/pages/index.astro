@@ -2,6 +2,7 @@
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Card from '../components/blocks/Card.astro';
 import { getAllInns } from '../data/inns';
+import { innPath } from '../lib/helpers';
 
 const inns = getAllInns();
 ---
@@ -43,13 +44,13 @@ const inns = getAllInns();
               </div>
               <div class="flex gap-2">
                 <a
-                  href={`/g/${inn.slug}/`}
+                  href={innPath(inn.slug, 'ja')}
                   class="tap inline-flex items-center justify-center rounded-xl bg-[color:var(--color-accent-2)] text-white px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-accent)]"
                 >
                   日本語
                 </a>
                 <a
-                  href={`/g/${inn.slug}/en/`}
+                  href={innPath(inn.slug, 'en')}
                   class="tap inline-flex items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-surface-2)]"
                 >
                   English

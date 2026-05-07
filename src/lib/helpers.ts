@@ -1,5 +1,7 @@
 import type { Lang, RepeatableBase, Section } from './types';
 
+const BASE = import.meta.env.BASE_URL;
+
 /**
  * 日本語/英語フィールドのうち、現在の言語に対応するテキストを返す。
  * 英語が空の場合は日本語にフォールバックする。
@@ -26,7 +28,7 @@ export function visibleSorted<T extends RepeatableBase>(items: T[]): T[] {
 
 /** 宿の詳細ページの URL を返す。 */
 export function innPath(slug: string, lang: Lang): string {
-  return lang === 'en' ? `/g/${slug}/en/` : `/g/${slug}/`;
+  return lang === 'en' ? `${BASE}g/${slug}/en/` : `${BASE}g/${slug}/`;
 }
 
 /** 現在のページに対する反対言語のリンク先を返す。 */
@@ -46,8 +48,8 @@ export function sectionPath(
   lang: Lang,
 ): string {
   return lang === 'en'
-    ? `/g/${slug}/en/${section}/`
-    : `/g/${slug}/${section}/`;
+    ? `${BASE}g/${slug}/en/${section}/`
+    : `${BASE}g/${slug}/${section}/`;
 }
 
 /** セクションページに対する反対言語のリンク先を返す。 */

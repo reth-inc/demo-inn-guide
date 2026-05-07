@@ -1,5 +1,6 @@
 ---
 import type { Inn, Lang } from '../../lib/types';
+import { innPath } from '../../lib/helpers';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 
 interface Props {
@@ -23,7 +24,7 @@ const subname = lang === 'en' ? inn.header.nameJa : inn.header.nameEn;
         Guest Guide
       </p>
       <h1 class="text-base sm:text-lg font-semibold leading-tight truncate">
-        <a href={lang === 'en' ? `/g/${inn.slug}/en/` : `/g/${inn.slug}/`} class="hover:opacity-80">
+        <a href={innPath(inn.slug, lang)} class="hover:opacity-80">
           {name}
         </a>
       </h1>
