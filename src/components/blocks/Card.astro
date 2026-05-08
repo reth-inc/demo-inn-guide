@@ -6,12 +6,12 @@ interface Props {
   padded?: boolean;
 }
 
-const { class: className = '', padded = true } = Astro.props;
+const { class: className = "", padded = true } = Astro.props;
 ---
 
 <article
   class={`rounded-2xl bg-[color:var(--color-surface)] border border-[color:var(--color-border)] shadow-[0_1px_2px_rgba(0,0,0,0.03)] ${
-    padded ? 'p-4 sm:p-5' : ''
+    padded ? "p-4 sm:p-5" : ""
   } ${className}`}
 >
   <slot />

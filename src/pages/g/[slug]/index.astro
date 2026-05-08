@@ -1,7 +1,7 @@
 ---
-import type { GetStaticPaths } from 'astro';
-import { getAllInns, getInnBySlug } from '../../../data/inns';
-import InnPage from '../../../components/layout/InnPage.astro';
+import type { GetStaticPaths } from "astro";
+import { getAllInns, getInnBySlug } from "../../../data/inns";
+import InnPage from "../../../components/layout/InnPage.astro";
 
 export const getStaticPaths = (() => {
   return getAllInns().map((inn) => ({ params: { slug: inn.slug } }));
@@ -10,7 +10,7 @@ export const getStaticPaths = (() => {
 const { slug } = Astro.params;
 const inn = getInnBySlug(slug!);
 if (!inn) {
-  return Astro.redirect('/');
+  return Astro.redirect("/");
 }
 ---
 

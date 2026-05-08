@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../components/layout/BaseLayout.astro';
-import Card from '../components/blocks/Card.astro';
-import { getAllInns } from '../data/inns';
-import { innPath } from '../lib/helpers';
+import BaseLayout from "../components/layout/BaseLayout.astro";
+import Card from "../components/blocks/Card.astro";
+import { getAllInns } from "../data/inns";
+import { innPath } from "../lib/helpers";
 
 const inns = getAllInns();
 ---
@@ -14,11 +14,13 @@ const inns = getAllInns();
 >
   <main class="mx-auto max-w-screen-md px-4 py-10 sm:py-14">
     <div class="mb-8">
-      <p class="text-[11px] tracking-[0.18em] uppercase text-[color:var(--color-accent-2)] font-medium">
+      <p
+        class="text-[11px] font-medium tracking-[0.18em] text-[color:var(--color-accent-2)] uppercase"
+      >
         Demo
       </p>
-      <h1 class="mt-1 text-2xl sm:text-3xl font-semibold">館内案内</h1>
-      <p class="mt-2 text-sm text-[color:var(--color-ink-2)] leading-relaxed">
+      <h1 class="mt-1 text-2xl font-semibold sm:text-3xl">館内案内</h1>
+      <p class="mt-2 text-sm leading-relaxed text-[color:var(--color-ink-2)]">
         宿泊者向け館内案内のデモサイトです。下記の宿について、日本語・英語・中国語ページをご覧いただけます。
       </p>
       <p class="mt-1 text-xs text-[color:var(--color-muted)]">
@@ -27,49 +29,52 @@ const inns = getAllInns();
     </div>
 
     <ul class="space-y-3">
-      {inns.map((inn) => (
-        <li>
-          <Card>
-            <div class="flex items-start justify-between gap-3 flex-wrap">
-              <div class="min-w-0">
-                <h2 class="font-semibold text-[color:var(--color-ink)] leading-tight">
-                  {inn.header.nameJa}
-                </h2>
-                <p class="text-xs text-[color:var(--color-muted)] mt-0.5">
-                  {inn.header.nameEn}
-                </p>
-                <p class="text-[11px] text-[color:var(--color-muted)] mt-1 font-mono">
-                  /g/{inn.slug}/
-                </p>
+      {
+        inns.map((inn) => (
+          <li>
+            <Card>
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <h2 class="leading-tight font-semibold text-[color:var(--color-ink)]">
+                    {inn.header.nameJa}
+                  </h2>
+                  <p class="mt-0.5 text-xs text-[color:var(--color-muted)]">
+                    {inn.header.nameEn}
+                  </p>
+                  <p class="mt-1 font-mono text-[11px] text-[color:var(--color-muted)]">
+                    /g/{inn.slug}/
+                  </p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <a
+                    href={innPath(inn.slug, "ja")}
+                    class="tap inline-flex items-center justify-center rounded-xl bg-[color:var(--color-accent-2)] px-4 py-2 text-sm font-medium text-white hover:bg-[color:var(--color-accent)]"
+                  >
+                    日本語
+                  </a>
+                  <a
+                    href={innPath(inn.slug, "en")}
+                    class="tap inline-flex items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-surface-2)]"
+                  >
+                    English
+                  </a>
+                  <a
+                    href={innPath(inn.slug, "zh")}
+                    class="tap inline-flex items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-surface-2)]"
+                  >
+                    中文
+                  </a>
+                </div>
               </div>
-              <div class="flex flex-wrap gap-2">
-                <a
-                  href={innPath(inn.slug, 'ja')}
-                  class="tap inline-flex items-center justify-center rounded-xl bg-[color:var(--color-accent-2)] text-white px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-accent)]"
-                >
-                  日本語
-                </a>
-                <a
-                  href={innPath(inn.slug, 'en')}
-                  class="tap inline-flex items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-surface-2)]"
-                >
-                  English
-                </a>
-                <a
-                  href={innPath(inn.slug, 'zh')}
-                  class="tap inline-flex items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-surface-2)]"
-                >
-                  中文
-                </a>
-              </div>
-            </div>
-          </Card>
-        </li>
-      ))}
+            </Card>
+          </li>
+        ))
+      }
     </ul>
 
-    <p class="mt-10 text-xs text-[color:var(--color-muted)] leading-relaxed">
-      ※ ダミーデータを使用しています。本データやサービスの提供状況は実際の宿泊施設とは関係ありません。
+    <p class="mt-10 text-xs leading-relaxed text-[color:var(--color-muted)]">
+      ※
+      ダミーデータを使用しています。本データやサービスの提供状況は実際の宿泊施設とは関係ありません。
     </p>
   </main>
 </BaseLayout>

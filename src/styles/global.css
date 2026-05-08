@@ -19,9 +19,9 @@
   --color-warning: #b58400;
 
   --font-family-sans:
-    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
-    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+    "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", ui-sans-serif,
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
 }
 
 html {

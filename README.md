@@ -9,10 +9,10 @@ QR から飛んだスマホで Wi-Fi、お時間案内、サービス、周辺�
 
 ## 必要環境
 
-| ツール | バージョン |
-| --- | --- |
+| ツール  | バージョン                                |
+| ------- | ----------------------------------------- |
 | Node.js | **v20.10 以上**（v22 / v24 でも動作確認） |
-| npm | v10 以上 |
+| npm     | v10 以上                                  |
 
 ## セットアップ・起動方法
 
@@ -62,13 +62,13 @@ npm run check     # astro check による型・テンプレート検査
 宿トップ (`/g/[slug]/`) は **Wi-Fi + 各セクションへの導線カード** で構成しています。
 各セクションは独立ページを持ち、そのセクションの全アイテムを表示します。
 
-| section パラメータ | 対応データ | ページ内容 |
-| --- | --- | --- |
-| `times` | `inn.times` | お時間案内一覧 |
-| `services` | `inn.services` | サービス案内一覧 |
-| `additional` | `inn.additional` | 館内のご案内一覧（**館内図もこの中の 1 アイテムとして登録**） |
-| `area` | `inn.area` | 周辺情報一覧（タグ + 地図リンク + 画像） |
-| `faq` | `inn.faq` | FAQ アコーディオン |
+| section パラメータ | 対応データ       | ページ内容                                                    |
+| ------------------ | ---------------- | ------------------------------------------------------------- |
+| `times`            | `inn.times`      | お時間案内一覧                                                |
+| `services`         | `inn.services`   | サービス案内一覧                                              |
+| `additional`       | `inn.additional` | 館内のご案内一覧（**館内図もこの中の 1 アイテムとして登録**） |
+| `area`             | `inn.area`       | 周辺情報一覧（タグ + 地図リンク + 画像）                      |
+| `faq`              | `inn.faq`        | FAQ アコーディオン                                            |
 
 各セクションのアイテムは画像 (`imageUrl`) と PDF (`pdfUrl`) を任意で持てるため、
 **館内図は「館内のご案内」の AdditionalItem として、画像 + PDF 付きで登録します**。
@@ -133,16 +133,24 @@ src/
 ```ts
 export const inns: Inn[] = [
   // 既存
-  { slug: 'iriyamato', /* ... */ },
+  { slug: "iriyamato" /* ... */ },
   // 追加
   {
-    slug: 'my-new-inn',
-    header: { nameJa: '新しい宿', nameEn: 'My New Inn' },
-    wifi: { ssid: 'my-wifi', password: 'pass-1234' },
-    floorMap: { /* ... */ },
-    footer: { /* ... */ },
-    times: [], services: [], additional: [],
-    area: [], faq: [], info: [],
+    slug: "my-new-inn",
+    header: { nameJa: "新しい宿", nameEn: "My New Inn" },
+    wifi: { ssid: "my-wifi", password: "pass-1234" },
+    floorMap: {
+      /* ... */
+    },
+    footer: {
+      /* ... */
+    },
+    times: [],
+    services: [],
+    additional: [],
+    area: [],
+    faq: [],
+    info: [],
   },
 ];
 ```
@@ -160,22 +168,22 @@ export const inns: Inn[] = [
 
 ## 主要コンポーネントの責務
 
-| コンポーネント | 役割 |
-| --- | --- |
-| `layout/BaseLayout.astro` | `<html>` / `<head>` / 共通スタイルロード |
-| `layout/Header.astro` | 上部固定の宿名表示 + 言語切替 |
-| `layout/Footer.astro` | 住所・電話・メール・SNS リンク |
-| `layout/LanguageSwitcher.astro` | ja ↔ en の URL を切り替えるリンク |
-| `layout/InnPage.astro` | 宿トップ（ハブ）。Wi-Fi + 各セクションへの導線カードを並べる |
-| `layout/SectionPage.astro` | セクションページの共通レイアウト。`section` プロップで内容を切替 |
-| `layout/SectionLinkCard.astro` | 宿トップに並べる、各セクションページへのリンクカード（アイコン + タイトル + 説明 + chevron） |
-| `sections/WifiSection.astro` | SSID / パスワード表示。タップで選択可能 |
-| `sections/MapSection.astro` | 館内図（画像 + PDF）。両方なければ非表示 |
-| `sections/TimesSection.astro` | チェックイン等のお時間案内一覧 |
-| `sections/ServicesSection.astro` | サービス案内 / 追加案内一覧（PDF ボタン付き） |
-| `sections/AreaSection.astro` | 周辺情報一覧（タグ + 地図リンク） |
-| `sections/FaqSection.astro` | `<details>` ベースのアコーディオン FAQ |
-| `sections/InfoSection.astro` | お得情報一覧 |
+| コンポーネント                   | 役割                                                                                         |
+| -------------------------------- | -------------------------------------------------------------------------------------------- |
+| `layout/BaseLayout.astro`        | `<html>` / `<head>` / 共通スタイルロード                                                     |
+| `layout/Header.astro`            | 上部固定の宿名表示 + 言語切替                                                                |
+| `layout/Footer.astro`            | 住所・電話・メール・SNS リンク                                                               |
+| `layout/LanguageSwitcher.astro`  | ja ↔ en の URL を切り替えるリンク                                                            |
+| `layout/InnPage.astro`           | 宿トップ（ハブ）。Wi-Fi + 各セクションへの導線カードを並べる                                 |
+| `layout/SectionPage.astro`       | セクションページの共通レイアウト。`section` プロップで内容を切替                             |
+| `layout/SectionLinkCard.astro`   | 宿トップに並べる、各セクションページへのリンクカード（アイコン + タイトル + 説明 + chevron） |
+| `sections/WifiSection.astro`     | SSID / パスワード表示。タップで選択可能                                                      |
+| `sections/MapSection.astro`      | 館内図（画像 + PDF）。両方なければ非表示                                                     |
+| `sections/TimesSection.astro`    | チェックイン等のお時間案内一覧                                                               |
+| `sections/ServicesSection.astro` | サービス案内 / 追加案内一覧（PDF ボタン付き）                                                |
+| `sections/AreaSection.astro`     | 周辺情報一覧（タグ + 地図リンク）                                                            |
+| `sections/FaqSection.astro`      | `<details>` ベースのアコーディオン FAQ                                                       |
+| `sections/InfoSection.astro`     | お得情報一覧                                                                                 |
 
 各 `sections/*` は `showTitle` プロップを取り、SectionPage 側でヒーロー見出しを別途出すときは `false` にする（宿トップでは現状未使用だが拡張用）。
 | `blocks/Card.astro` | 角丸 + 枠線の汎用カード |
@@ -240,4 +248,3 @@ Pages Functions または Workers Routes を使うのが素直です。
 - 宿一覧 (`/`) はデモ用のトップなので、本番では認証 / 非公開化することを想定
 - Wi-Fi の「コピーボタン」はスペースの都合で省略しタップ選択 (`select-all`) のみ対応
   （JS で Clipboard API を入れる余地あり）
-

@@ -4,7 +4,7 @@
  * マッピングすれば各コンポーネントは無修正で動かせる。
  */
 
-export type Lang = 'ja' | 'en' | 'zh';
+export type Lang = "ja" | "en" | "zh";
 
 /** 多言語テキストのペア。日本語以外が空のときは日本語にフォールバックする想定。 */
 export interface LocalizedText {
@@ -72,12 +72,7 @@ export interface AdditionalItem extends RepeatableBase {
   pdfUrl?: string;
 }
 
-export const AREA_TAGS = [
-  'restaurant',
-  'rental',
-  'souvenir',
-  'shop',
-] as const;
+export const AREA_TAGS = ["restaurant", "rental", "souvenir", "shop"] as const;
 
 export type AreaTag = (typeof AREA_TAGS)[number];
 
@@ -132,11 +127,11 @@ export interface Inn {
  * 宿トップ (`/g/[slug]/`) は Wi-Fi + これらへの導線で構成する。
  */
 export const SECTIONS = [
-  'times',
-  'services',
-  'additional',
-  'area',
-  'faq',
+  "times",
+  "services",
+  "additional",
+  "area",
+  "faq",
 ] as const;
 
 export type Section = (typeof SECTIONS)[number];

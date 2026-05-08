@@ -1,9 +1,9 @@
 ---
-import type { GetStaticPaths } from 'astro';
-import { getAllSectionParams, getInnBySlug } from '../../../../../data/inns';
-import type { Section } from '../../../../../lib/types';
-import { SECTIONS } from '../../../../../lib/types';
-import SectionPage from '../../../../../components/layout/SectionPage.astro';
+import type { GetStaticPaths } from "astro";
+import { getAllSectionParams, getInnBySlug } from "../../../../../data/inns";
+import type { Section } from "../../../../../lib/types";
+import { SECTIONS } from "../../../../../lib/types";
+import SectionPage from "../../../../../components/layout/SectionPage.astro";
 
 export const getStaticPaths = (() => {
   return getAllSectionParams().map((p) => ({
@@ -13,7 +13,7 @@ export const getStaticPaths = (() => {
 
 const { slug, section } = Astro.params;
 const inn = getInnBySlug(slug!);
-if (!inn) return Astro.redirect('/');
+if (!inn) return Astro.redirect("/");
 
 if (!SECTIONS.includes(section as Section)) {
   return Astro.redirect(`/g/${slug}/zh/`);

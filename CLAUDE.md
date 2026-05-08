@@ -11,13 +11,13 @@
 
 ## コマンド
 
-| コマンド | 用途 |
-| --- | --- |
-| `npm run dev` | dev サーバー（localhost のみ） |
+| コマンド          | 用途                                                  |
+| ----------------- | ----------------------------------------------------- |
+| `npm run dev`     | dev サーバー（localhost のみ）                        |
 | `npm run dev:lan` | dev サーバー（`--host`、同一 LAN の他端末から接続可） |
-| `npm run build` | `dist/` へ静的ビルド |
-| `npm run preview` | ビルド済みのプレビュー |
-| `npm run check` | `astro check`（型・テンプレート検査） |
+| `npm run build`   | `dist/` へ静的ビルド                                  |
+| `npm run preview` | ビルド済みのプレビュー                                |
+| `npm run check`   | `astro check`（型・テンプレート検査）                 |
 
 ## データの集約点
 

@@ -1,9 +1,9 @@
 ---
-import type { InfoItem, Lang } from '../../lib/types';
-import { dict } from '../../lib/i18n';
-import { nonEmpty, pickText, visibleSorted } from '../../lib/helpers';
-import SectionTitle from '../common/SectionTitle.astro';
-import Card from '../blocks/Card.astro';
+import type { InfoItem, Lang } from "../../lib/types";
+import { dict } from "../../lib/i18n";
+import { nonEmpty, pickText, visibleSorted } from "../../lib/helpers";
+import SectionTitle from "../common/SectionTitle.astro";
+import Card from "../blocks/Card.astro";
 
 interface Props {
   items: InfoItem[];
@@ -16,40 +16,49 @@ const d = dict(lang);
 const visible = visibleSorted(items);
 ---
 
-{visible.length > 0 && (
-  <section class="px-4 sm:px-0">
-    {showTitle && <SectionTitle title={d.sections.info} eyebrow="INFO" />}
+{
+  visible.length > 0 && (
+    <section class="px-4 sm:px-0">
+      {showTitle && <SectionTitle title={d.sections.info} eyebrow="INFO" />}
 
-    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      {visible.map((item) => {
-        const title = pickText(lang, item.titleJa, item.titleEn, item.titleZh);
-        const body = pickText(lang, item.bodyJa, item.bodyEn, item.bodyZh);
-        return (
-          <li>
-            <Card padded={false} class="overflow-hidden h-full flex flex-col">
-              {nonEmpty(item.imageUrl) && (
-                <div class="bg-[color:var(--color-surface-2)] aspect-[16/9]">
-                  <img
-                    src={item.imageUrl}
-                    alt={title}
-                    loading="lazy"
-                    decoding="async"
-                    class="w-full h-full object-cover block"
-                  />
-                </div>
-              )}
-              <div class="p-4 sm:p-5 flex-1 flex flex-col">
-                <h3 class="font-medium text-[color:var(--color-ink)] leading-tight">{title}</h3>
-                {nonEmpty(body) && (
-                  <p class="mt-1.5 text-sm text-[color:var(--color-ink-2)] leading-relaxed whitespace-pre-line">
-                    {body}
-                  </p>
+      <ul class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {visible.map((item) => {
+          const title = pickText(
+            lang,
+            item.titleJa,
+            item.titleEn,
+            item.titleZh,
+          );
+          const body = pickText(lang, item.bodyJa, item.bodyEn, item.bodyZh);
+          return (
+            <li>
+              <Card padded={false} class="flex h-full flex-col overflow-hidden">
+                {nonEmpty(item.imageUrl) && (
+                  <div class="aspect-[16/9] bg-[color:var(--color-surface-2)]">
+                    <img
+                      src={item.imageUrl}
+                      alt={title}
+                      loading="lazy"
+                      decoding="async"
+                      class="block h-full w-full object-cover"
+                    />
+                  </div>
                 )}
-              </div>
-            </Card>
-          </li>
-        );
-      })}
-    </ul>
-  </section>
-)}
+                <div class="flex flex-1 flex-col p-4 sm:p-5">
+                  <h3 class="leading-tight font-medium text-[color:var(--color-ink)]">
+                    {title}
+                  </h3>
+                  {nonEmpty(body) && (
+                    <p class="mt-1.5 text-sm leading-relaxed whitespace-pre-line text-[color:var(--color-ink-2)]">
+                      {body}
+                    </p>
+                  )}
+                </div>
+              </Card>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  )
+}

@@ -1,15 +1,15 @@
 ---
-import type { Inn, Lang } from '../../lib/types';
-import { SECTIONS } from '../../lib/types';
-import { dict } from '../../lib/i18n';
-import { langLinks, pickText, sectionPath } from '../../lib/helpers';
-import { hasSectionContent } from '../../data/inns';
-import BaseLayout from './BaseLayout.astro';
-import Header from './Header.astro';
-import Footer from './Footer.astro';
-import WifiSection from '../sections/WifiSection.astro';
-import InfoSection from '../sections/InfoSection.astro';
-import SectionLinkCard from './SectionLinkCard.astro';
+import type { Inn, Lang } from "../../lib/types";
+import { SECTIONS } from "../../lib/types";
+import { dict } from "../../lib/i18n";
+import { langLinks, pickText, sectionPath } from "../../lib/helpers";
+import { hasSectionContent } from "../../data/inns";
+import BaseLayout from "./BaseLayout.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import WifiSection from "../sections/WifiSection.astro";
+import InfoSection from "../sections/InfoSection.astro";
+import SectionLinkCard from "./SectionLinkCard.astro";
 
 interface Props {
   inn: Inn;
@@ -28,9 +28,9 @@ const innName = pickText(
 
 const pageTitle = `${innName} | ${d.siteName}`;
 const pageDesc =
-  lang === 'en'
+  lang === "en"
     ? `In-house guide for ${innName}`
-    : lang === 'zh'
+    : lang === "zh"
       ? `${innName} 的客房指南`
       : `${innName} の館内案内`;
 
@@ -52,35 +52,39 @@ const visibleSections = SECTIONS.filter((s) => hasSectionContent(inn, s));
     </div>
 
     {/* セクション導線カード（背景色を変えてバンド表示） */}
-    {visibleSections.length > 0 && (
-      <div class="mt-6 bg-[color:var(--color-surface-2)] py-6 sm:py-8">
-        <div class="mx-auto max-w-screen-md">
-          <ul class="grid grid-cols-2 gap-3 px-4 sm:px-0">
-            {visibleSections.map((s) => (
-              <li>
-                <SectionLinkCard
-                  href={sectionPath(inn.slug, s, lang)}
-                  section={s}
-                  title={d.sections[s]}
-                />
-              </li>
-            ))}
-          </ul>
+    {
+      visibleSections.length > 0 && (
+        <div class="mt-6 bg-[color:var(--color-surface-2)] py-6 sm:py-8">
+          <div class="mx-auto max-w-screen-md">
+            <ul class="grid grid-cols-2 gap-3 px-4 sm:px-0">
+              {visibleSections.map((s) => (
+                <li>
+                  <SectionLinkCard
+                    href={sectionPath(inn.slug, s, lang)}
+                    section={s}
+                    title={d.sections[s]}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
 
     {/* インフォメーション（デフォルト背景に戻す） */}
-    {hasInfo && (
-      <section class="mx-auto max-w-screen-md mt-8">
-        <header class="mb-4 px-4 sm:px-0">
-          <h3 class="text-xl sm:text-2xl font-semibold text-[color:var(--color-ink)] leading-tight">
-            {d.sections.info}
-          </h3>
-        </header>
-        <InfoSection items={inn.info} lang={lang} showTitle={false} />
-      </section>
-    )}
+    {
+      hasInfo && (
+        <section class="mx-auto mt-8 max-w-screen-md">
+          <header class="mb-4 px-4 sm:px-0">
+            <h3 class="text-xl leading-tight font-semibold text-[color:var(--color-ink)] sm:text-2xl">
+              {d.sections.info}
+            </h3>
+          </header>
+          <InfoSection items={inn.info} lang={lang} showTitle={false} />
+        </section>
+      )
+    }
   </main>
 
   <Footer inn={inn} lang={lang} />

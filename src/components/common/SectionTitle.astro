@@ -11,17 +11,23 @@ const { id, title, subtitle, eyebrow } = Astro.props;
 ---
 
 <header class="mb-4" id={id}>
-  {eyebrow && (
-    <p class="text-[11px] tracking-[0.18em] font-medium text-[color:var(--color-accent-2)] uppercase mb-1">
-      {eyebrow}
-    </p>
-  )}
-  <h2 class="text-xl sm:text-2xl font-semibold text-[color:var(--color-ink)] leading-tight">
+  {
+    eyebrow && (
+      <p class="mb-1 text-[11px] font-medium tracking-[0.18em] text-[color:var(--color-accent-2)] uppercase">
+        {eyebrow}
+      </p>
+    )
+  }
+  <h2
+    class="text-xl leading-tight font-semibold text-[color:var(--color-ink)] sm:text-2xl"
+  >
     {title}
   </h2>
-  {subtitle && (
-    <p class="mt-1 text-sm text-[color:var(--color-ink-2)] leading-relaxed">
-      {subtitle}
-    </p>
-  )}
+  {
+    subtitle && (
+      <p class="mt-1 text-sm leading-relaxed text-[color:var(--color-ink-2)]">
+        {subtitle}
+      </p>
+    )
+  }
 </header>

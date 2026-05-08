@@ -1,8 +1,8 @@
 ---
-import type { Inn, Lang } from '../../lib/types';
-import type { LangLink } from '../../lib/helpers';
-import { innPath, pickText } from '../../lib/helpers';
-import LanguageSwitcher from './LanguageSwitcher.astro';
+import type { Inn, Lang } from "../../lib/types";
+import type { LangLink } from "../../lib/helpers";
+import { innPath, pickText } from "../../lib/helpers";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 interface Props {
   inn: Inn;
@@ -12,29 +12,40 @@ interface Props {
 }
 
 const { inn, lang, langLinks } = Astro.props;
-const name = pickText(lang, inn.header.nameJa, inn.header.nameEn, inn.header.nameZh);
+const name = pickText(
+  lang,
+  inn.header.nameJa,
+  inn.header.nameEn,
+  inn.header.nameZh,
+);
 // 副名: 現在が日本語なら英語表記を、それ以外なら正式名（日本語）を併記
-const subname = lang === 'ja' ? inn.header.nameEn : inn.header.nameJa;
+const subname = lang === "ja" ? inn.header.nameEn : inn.header.nameJa;
 ---
 
 <header
   class="sticky top-0 z-30 border-b border-[color:var(--color-border)] bg-[color:var(--color-surface)]/85 backdrop-blur"
 >
-  <div class="mx-auto max-w-screen-md px-4 py-3 flex items-center justify-between gap-3">
+  <div
+    class="mx-auto flex max-w-screen-md items-center justify-between gap-3 px-4 py-3"
+  >
     <div class="min-w-0">
-      <p class="text-[10px] tracking-[0.2em] uppercase text-[color:var(--color-muted)]">
+      <p
+        class="text-[10px] tracking-[0.2em] text-[color:var(--color-muted)] uppercase"
+      >
         Guest Guide
       </p>
-      <h1 class="text-base sm:text-lg font-semibold leading-tight truncate">
+      <h1 class="truncate text-base leading-tight font-semibold sm:text-lg">
         <a href={innPath(inn.slug, lang)} class="hover:opacity-80">
           {name}
         </a>
       </h1>
-      {subname && subname !== name && (
-        <p class="text-[11px] text-[color:var(--color-muted)] leading-tight truncate">
-          {subname}
-        </p>
-      )}
+      {
+        subname && subname !== name && (
+          <p class="truncate text-[11px] leading-tight text-[color:var(--color-muted)]">
+            {subname}
+          </p>
+        )
+      }
     </div>
     <LanguageSwitcher current={lang} links={langLinks} />
   </div>

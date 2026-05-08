@@ -1,10 +1,10 @@
 ---
-import type { AdditionalItem, Lang, ServiceItem } from '../../lib/types';
-import { dict } from '../../lib/i18n';
-import { nonEmpty, pickText, visibleSorted } from '../../lib/helpers';
-import SectionTitle from '../common/SectionTitle.astro';
-import Card from '../blocks/Card.astro';
-import Button from '../blocks/Button.astro';
+import type { AdditionalItem, Lang, ServiceItem } from "../../lib/types";
+import { dict } from "../../lib/i18n";
+import { nonEmpty, pickText, visibleSorted } from "../../lib/helpers";
+import SectionTitle from "../common/SectionTitle.astro";
+import Card from "../blocks/Card.astro";
+import Button from "../blocks/Button.astro";
 
 /**
  * サービス案内 / 追加案内 / その他「画像 + 本文 + PDF」型のカードリスト。
@@ -21,62 +21,69 @@ interface Props {
   showTitle?: boolean;
 }
 
-const {
-  items,
-  lang,
-  title,
-  eyebrow,
-  showTitle = true,
-} = Astro.props;
+const { items, lang, title, eyebrow, showTitle = true } = Astro.props;
 const d = dict(lang);
 const visible = visibleSorted(items);
 ---
 
-{visible.length > 0 && (
-  <section class="px-4 sm:px-0">
-    {showTitle && title && <SectionTitle title={title} eyebrow={eyebrow} />}
+{
+  visible.length > 0 && (
+    <section class="px-4 sm:px-0">
+      {showTitle && title && <SectionTitle title={title} eyebrow={eyebrow} />}
 
-    <ul class="grid grid-cols-1 gap-3">
-      {visible.map((item) => {
-        const t = pickText(lang, item.titleJa, item.titleEn, item.titleZh);
-        const body = pickText(lang, item.bodyJa, item.bodyEn, item.bodyZh);
-        return (
-          <li>
-            <Card padded={false} class="overflow-hidden">
-              {nonEmpty(item.imageUrl) && (
-                <div class="bg-[color:var(--color-surface-2)] aspect-[16/9]">
-                  <img
-                    src={item.imageUrl}
-                    alt={t}
-                    loading="lazy"
-                    decoding="async"
-                    class="w-full h-full object-cover block"
-                  />
-                </div>
-              )}
-              <div class="p-4 sm:p-5">
-                <h3 class="font-medium text-[color:var(--color-ink)] leading-tight">{t}</h3>
-                {nonEmpty(body) && (
-                  <p class="mt-1.5 text-sm text-[color:var(--color-ink-2)] leading-relaxed whitespace-pre-line">
-                    {body}
-                  </p>
-                )}
-                {nonEmpty(item.pdfUrl) && (
-                  <div class="mt-3">
-                    <Button href={item.pdfUrl} external variant="secondary">
-                      <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                        <polyline points="14 2 14 8 20 8" />
-                      </svg>
-                      {d.actions.viewPdf}
-                    </Button>
+      <ul class="grid grid-cols-1 gap-3">
+        {visible.map((item) => {
+          const t = pickText(lang, item.titleJa, item.titleEn, item.titleZh);
+          const body = pickText(lang, item.bodyJa, item.bodyEn, item.bodyZh);
+          return (
+            <li>
+              <Card padded={false} class="overflow-hidden">
+                {nonEmpty(item.imageUrl) && (
+                  <div class="aspect-[16/9] bg-[color:var(--color-surface-2)]">
+                    <img
+                      src={item.imageUrl}
+                      alt={t}
+                      loading="lazy"
+                      decoding="async"
+                      class="block h-full w-full object-cover"
+                    />
                   </div>
                 )}
-              </div>
-            </Card>
-          </li>
-        );
-      })}
-    </ul>
-  </section>
-)}
+                <div class="p-4 sm:p-5">
+                  <h3 class="leading-tight font-medium text-[color:var(--color-ink)]">
+                    {t}
+                  </h3>
+                  {nonEmpty(body) && (
+                    <p class="mt-1.5 text-sm leading-relaxed whitespace-pre-line text-[color:var(--color-ink-2)]">
+                      {body}
+                    </p>
+                  )}
+                  {nonEmpty(item.pdfUrl) && (
+                    <div class="mt-3">
+                      <Button href={item.pdfUrl} external variant="secondary">
+                        <svg
+                          viewBox="0 0 24 24"
+                          class="size-4"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                          <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                        {d.actions.viewPdf}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  )
+}

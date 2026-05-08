@@ -1,7 +1,7 @@
 ---
-import type { Lang } from '../../lib/types';
-import type { LangLink } from '../../lib/helpers';
-import { dict } from '../../lib/i18n';
+import type { Lang } from "../../lib/types";
+import type { LangLink } from "../../lib/helpers";
+import { dict } from "../../lib/i18n";
 
 interface Props {
   /** 現在の言語 */
@@ -22,12 +22,12 @@ const d = dict(current);
     links.map((l) => (
       <a
         href={l.href}
-        aria-current={l.isCurrent ? 'page' : undefined}
+        aria-current={l.isCurrent ? "page" : undefined}
         class:list={[
-          'tap inline-flex items-center justify-center rounded-full px-2.5 py-1 transition-colors',
+          "tap inline-flex items-center justify-center rounded-full px-2.5 py-1 transition-colors",
           l.isCurrent
-            ? 'bg-[color:var(--color-accent-2)] text-white'
-            : 'text-[color:var(--color-ink-2)] hover:bg-[color:var(--color-surface-2)]',
+            ? "bg-[color:var(--color-accent-2)] text-white"
+            : "text-[color:var(--color-ink-2)] hover:bg-[color:var(--color-surface-2)]",
         ]}
       >
         {l.label}

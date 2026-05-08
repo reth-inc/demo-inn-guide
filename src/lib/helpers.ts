@@ -1,22 +1,22 @@
-import type { Lang, RepeatableBase, Section } from './types';
+import type { Lang, RepeatableBase, Section } from "./types";
 
 const BASE = import.meta.env.BASE_URL;
 
 /** サイトが対応する全言語。表示順は言語スイッチャーの並び順に一致する。 */
-export const ALL_LANGS = ['ja', 'en', 'zh'] as const satisfies readonly Lang[];
+export const ALL_LANGS = ["ja", "en", "zh"] as const satisfies readonly Lang[];
 
 /** 言語スイッチャーなどに表示する短いラベル。 */
 export const LANG_LABELS: Record<Lang, string> = {
-  ja: 'JA',
-  en: 'EN',
-  zh: '中文',
+  ja: "JA",
+  en: "EN",
+  zh: "中文",
 };
 
 /** URL に挟む言語セグメント（日本語はデフォルトなので空）。 */
 const LANG_URL_SEGMENT: Record<Lang, string> = {
-  ja: '',
-  en: 'en/',
-  zh: 'zh/',
+  ja: "",
+  en: "en/",
+  zh: "zh/",
 };
 
 /**
@@ -29,14 +29,14 @@ export function pickText(
   en: string | undefined,
   zh?: string | undefined,
 ): string {
-  if (lang === 'en') {
-    const v = (en ?? '').trim();
+  if (lang === "en") {
+    const v = (en ?? "").trim();
     if (v) return v;
-  } else if (lang === 'zh') {
-    const v = (zh ?? '').trim();
+  } else if (lang === "zh") {
+    const v = (zh ?? "").trim();
     if (v) return v;
   }
-  return (ja ?? '').trim();
+  return (ja ?? "").trim();
 }
 
 /** 表示対象の繰り返し項目だけを order 昇順で返す。 */
@@ -94,5 +94,5 @@ export function sectionLangLinks(
 
 /** 文字列が空でないかをチェックする小さなヘルパー。 */
 export function nonEmpty(value: string | undefined | null): value is string {
-  return typeof value === 'string' && value.trim().length > 0;
+  return typeof value === "string" && value.trim().length > 0;
 }
