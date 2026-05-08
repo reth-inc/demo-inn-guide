@@ -6,13 +6,6 @@
 
 export type Lang = "ja" | "en" | "zh";
 
-/** 多言語テキストのペア。日本語以外が空のときは日本語にフォールバックする想定。 */
-export interface LocalizedText {
-  ja: string;
-  en?: string;
-  zh?: string;
-}
-
 /** 表示順と表示/非表示を持つ繰り返し項目の共通フィールド。 */
 export interface RepeatableBase {
   order: number;
