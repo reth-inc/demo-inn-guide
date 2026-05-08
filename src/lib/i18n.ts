@@ -99,6 +99,53 @@ export const t = {
       answer: 'Answer',
     },
   },
+  zh: {
+    siteName: '客房指南',
+    listTitle: '住宿设施一览',
+    listLead: '可在日文、英文或中文页面查看各住宿设施的客房指南。',
+    langSwitch: '切换语言',
+    langLabel: '语言',
+    sections: {
+      wifi: 'Wi-Fi',
+      times: '时间安排',
+      services: '服务介绍',
+      additional: '馆内介绍',
+      area: '周边信息',
+      faq: '常见问题',
+      info: '资讯',
+      contact: '联系方式',
+    },
+    wifi: {
+      ssid: 'SSID',
+      password: '密码',
+      copy: '复制',
+      copied: '已复制',
+    },
+    actions: {
+      viewPdf: '查看 PDF',
+      viewMap: '查看地图',
+      openLine: '打开 LINE',
+      openInstagram: '打开 Instagram',
+      detail: '查看详情',
+      back: '返回指南首页',
+    },
+    footer: {
+      address: '地址',
+      phone: '电话',
+      email: '邮箱',
+    },
+    tags: {
+      restaurant: '餐厅',
+      rental: '租赁',
+      souvenir: '土特产',
+      shop: '商店',
+    },
+    faq: {
+      questionLabel: 'Q',
+      answerLabel: 'A',
+      answer: '回答',
+    },
+  },
 } as const satisfies Record<Lang, unknown>;
 
 export type Dict = (typeof t)[Lang];

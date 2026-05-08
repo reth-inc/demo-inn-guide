@@ -1,17 +1,20 @@
 ---
 import '../../styles/global.css';
+import type { Lang } from '../../lib/types';
 
 interface Props {
   title: string;
   description?: string;
-  lang: 'ja' | 'en';
+  lang: Lang;
 }
 
 const { title, description, lang } = Astro.props;
+// HTML の lang 属性には BCP47 形式を使う（zh は簡体字想定で zh-Hans）。
+const htmlLang = lang === 'zh' ? 'zh-Hans' : lang;
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />

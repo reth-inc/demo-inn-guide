@@ -4,12 +4,13 @@
  * マッピングすれば各コンポーネントは無修正で動かせる。
  */
 
-export type Lang = 'ja' | 'en';
+export type Lang = 'ja' | 'en' | 'zh';
 
-/** 日本語/英語ペアのテキスト。英語が空のときは日本語にフォールバックする想定。 */
+/** 多言語テキストのペア。日本語以外が空のときは日本語にフォールバックする想定。 */
 export interface LocalizedText {
   ja: string;
   en?: string;
+  zh?: string;
 }
 
 /** 表示順と表示/非表示を持つ繰り返し項目の共通フィールド。 */
@@ -21,6 +22,7 @@ export interface RepeatableBase {
 export interface Header {
   nameJa: string;
   nameEn: string;
+  nameZh?: string;
 }
 
 export interface WifiInfo {
@@ -31,6 +33,7 @@ export interface WifiInfo {
 export interface Footer {
   addressJa: string;
   addressEn: string;
+  addressZh?: string;
   phone: string;
   email: string;
   instagramUrl?: string;
@@ -40,16 +43,20 @@ export interface Footer {
 export interface TimeItem extends RepeatableBase {
   titleJa: string;
   titleEn: string;
+  titleZh?: string;
   time: string;
   bodyJa?: string;
   bodyEn?: string;
+  bodyZh?: string;
 }
 
 export interface ServiceItem extends RepeatableBase {
   titleJa: string;
   titleEn: string;
+  titleZh?: string;
   bodyJa?: string;
   bodyEn?: string;
+  bodyZh?: string;
   imageUrl?: string;
   pdfUrl?: string;
 }
@@ -57,8 +64,10 @@ export interface ServiceItem extends RepeatableBase {
 export interface AdditionalItem extends RepeatableBase {
   titleJa: string;
   titleEn: string;
+  titleZh?: string;
   bodyJa?: string;
   bodyEn?: string;
+  bodyZh?: string;
   imageUrl?: string;
   pdfUrl?: string;
 }
@@ -75,10 +84,12 @@ export type AreaTag = (typeof AREA_TAGS)[number];
 export interface AreaItem extends RepeatableBase {
   titleJa: string;
   titleEn: string;
+  titleZh?: string;
   tags: AreaTag[];
   mapUrl?: string;
   bodyJa?: string;
   bodyEn?: string;
+  bodyZh?: string;
   /** 店舗の外観・料理などのイメージ画像 */
   imageUrl?: string;
 }
@@ -86,16 +97,20 @@ export interface AreaItem extends RepeatableBase {
 export interface FaqItem extends RepeatableBase {
   questionJa: string;
   questionEn: string;
+  questionZh?: string;
   answerJa: string;
   answerEn: string;
+  answerZh?: string;
 }
 
 export interface InfoItem extends RepeatableBase {
   imageUrl?: string;
   titleJa: string;
   titleEn: string;
+  titleZh?: string;
   bodyJa?: string;
   bodyEn?: string;
+  bodyZh?: string;
 }
 
 export interface Inn {

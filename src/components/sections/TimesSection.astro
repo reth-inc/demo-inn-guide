@@ -23,8 +23,8 @@ const visible = visibleSorted(items);
     <Card padded={false}>
       <ul class="divide-y divide-[color:var(--color-border)]">
         {visible.map((item) => {
-          const title = pickText(lang, item.titleJa, item.titleEn);
-          const body = pickText(lang, item.bodyJa, item.bodyEn);
+          const title = pickText(lang, item.titleJa, item.titleEn, item.titleZh);
+          const body = pickText(lang, item.bodyJa, item.bodyEn, item.bodyZh);
           return (
             <li class="p-4 sm:p-5 flex items-start gap-3">
               <span

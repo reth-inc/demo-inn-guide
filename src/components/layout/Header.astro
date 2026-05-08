@@ -1,18 +1,20 @@
 ---
 import type { Inn, Lang } from '../../lib/types';
-import { innPath } from '../../lib/helpers';
+import type { LangLink } from '../../lib/helpers';
+import { innPath, pickText } from '../../lib/helpers';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 
 interface Props {
   inn: Inn;
   lang: Lang;
-  /** 言語切替の遷移先（宿ページ / 詳細ページなど呼び出し側で決める） */
-  altHref: string;
+  /** 全言語へのリンク（呼び出し側で計算する） */
+  langLinks: LangLink[];
 }
 
-const { inn, lang, altHref } = Astro.props;
-const name = lang === 'en' ? inn.header.nameEn || inn.header.nameJa : inn.header.nameJa;
-const subname = lang === 'en' ? inn.header.nameJa : inn.header.nameEn;
+const { inn, lang, langLinks } = Astro.props;
+const name = pickText(lang, inn.header.nameJa, inn.header.nameEn, inn.header.nameZh);
+// 副名: 現在が日本語なら英語表記を、それ以外なら正式名（日本語）を併記
+const subname = lang === 'ja' ? inn.header.nameEn : inn.header.nameJa;
 ---
 
 <header
@@ -34,6 +36,6 @@ const subname = lang === 'en' ? inn.header.nameJa : inn.header.nameEn;
         </p>
       )}
     </div>
-    <LanguageSwitcher altHref={altHref} current={lang} />
+    <LanguageSwitcher current={lang} links={langLinks} />
   </div>
 </header>

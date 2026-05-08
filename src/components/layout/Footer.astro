@@ -1,7 +1,7 @@
 ---
 import type { Inn, Lang } from '../../lib/types';
 import { dict } from '../../lib/i18n';
-import { nonEmpty } from '../../lib/helpers';
+import { nonEmpty, pickText } from '../../lib/helpers';
 
 interface Props {
   inn: Inn;
@@ -11,7 +11,7 @@ interface Props {
 const { inn, lang } = Astro.props;
 const d = dict(lang);
 const f = inn.footer;
-const address = lang === 'en' ? f.addressEn || f.addressJa : f.addressJa;
+const address = pickText(lang, f.addressJa, f.addressEn, f.addressZh);
 ---
 
 <footer class="mt-12 border-t border-[color:var(--color-border)] bg-[color:var(--color-surface-2)]">

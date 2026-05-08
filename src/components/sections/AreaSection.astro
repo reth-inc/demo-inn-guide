@@ -24,8 +24,8 @@ const visible = visibleSorted(items);
 
     <ul class="grid grid-cols-1 gap-3">
       {visible.map((item) => {
-        const title = pickText(lang, item.titleJa, item.titleEn);
-        const body = pickText(lang, item.bodyJa, item.bodyEn);
+        const title = pickText(lang, item.titleJa, item.titleEn, item.titleZh);
+        const body = pickText(lang, item.bodyJa, item.bodyEn, item.bodyZh);
         return (
           <li>
             <Card padded={false} class="overflow-hidden">

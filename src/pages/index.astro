@@ -19,7 +19,7 @@ const inns = getAllInns();
       </p>
       <h1 class="mt-1 text-2xl sm:text-3xl font-semibold">館内案内</h1>
       <p class="mt-2 text-sm text-[color:var(--color-ink-2)] leading-relaxed">
-        宿泊者向け館内案内のデモサイトです。下記の宿について、日本語・英語ページをご覧いただけます。
+        宿泊者向け館内案内のデモサイトです。下記の宿について、日本語・英語・中国語ページをご覧いただけます。
       </p>
       <p class="mt-1 text-xs text-[color:var(--color-muted)]">
         Demo of a multi-lingual in-house guide. Choose an inn below.
@@ -42,7 +42,7 @@ const inns = getAllInns();
                   /g/{inn.slug}/
                 </p>
               </div>
-              <div class="flex gap-2">
+              <div class="flex flex-wrap gap-2">
                 <a
                   href={innPath(inn.slug, 'ja')}
                   class="tap inline-flex items-center justify-center rounded-xl bg-[color:var(--color-accent-2)] text-white px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-accent)]"
@@ -54,6 +54,12 @@ const inns = getAllInns();
                   class="tap inline-flex items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-surface-2)]"
                 >
                   English
+                </a>
+                <a
+                  href={innPath(inn.slug, 'zh')}
+                  class="tap inline-flex items-center justify-center rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface)] px-4 py-2 text-sm font-medium hover:bg-[color:var(--color-surface-2)]"
+                >
+                  中文
                 </a>
               </div>
             </div>

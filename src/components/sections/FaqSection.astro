@@ -26,8 +26,8 @@ const visible = visibleSorted(items);
     <Card padded={false}>
       <ul class="divide-y divide-[color:var(--color-border)]">
         {visible.map((item) => {
-          const q = pickText(lang, item.questionJa, item.questionEn);
-          const a = pickText(lang, item.answerJa, item.answerEn);
+          const q = pickText(lang, item.questionJa, item.questionEn, item.questionZh);
+          const a = pickText(lang, item.answerJa, item.answerEn, item.answerZh);
           return (
             <li>
               <details class="group">

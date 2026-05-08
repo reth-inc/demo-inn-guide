@@ -1,7 +1,7 @@
 ---
 import type { Inn, Lang, Section } from '../../lib/types';
 import { dict } from '../../lib/i18n';
-import { altSectionPath, innPath } from '../../lib/helpers';
+import { innPath, pickText, sectionLangLinks } from '../../lib/helpers';
 import BaseLayout from './BaseLayout.astro';
 import Header from './Header.astro';
 import Footer from './Footer.astro';
@@ -19,17 +19,21 @@ interface Props {
 const { inn, lang, section } = Astro.props;
 const d = dict(lang);
 
-const innName =
-  lang === 'en' ? inn.header.nameEn || inn.header.nameJa : inn.header.nameJa;
+const innName = pickText(
+  lang,
+  inn.header.nameJa,
+  inn.header.nameEn,
+  inn.header.nameZh,
+);
 const sectionLabel = d.sections[section];
 const pageTitle = `${sectionLabel} | ${innName}`;
 const pageDesc = `${innName} - ${sectionLabel}`;
-const altHref = altSectionPath(inn.slug, section, lang);
+const headerLinks = sectionLangLinks(inn.slug, section, lang);
 const backHref = innPath(inn.slug, lang);
 ---
 
 <BaseLayout title={pageTitle} description={pageDesc} lang={lang}>
-  <Header inn={inn} lang={lang} altHref={altHref} />
+  <Header inn={inn} lang={lang} langLinks={headerLinks} />
 
   <main class="mx-auto max-w-screen-md pb-8">
     {/* 戻るリンク */}

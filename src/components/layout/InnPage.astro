@@ -2,7 +2,7 @@
 import type { Inn, Lang } from '../../lib/types';
 import { SECTIONS } from '../../lib/types';
 import { dict } from '../../lib/i18n';
-import { altLangPath, sectionPath } from '../../lib/helpers';
+import { langLinks, pickText, sectionPath } from '../../lib/helpers';
 import { hasSectionContent } from '../../data/inns';
 import BaseLayout from './BaseLayout.astro';
 import Header from './Header.astro';
@@ -19,14 +19,22 @@ interface Props {
 const { inn, lang } = Astro.props;
 const d = dict(lang);
 
-const innName =
-  lang === 'en' ? inn.header.nameEn || inn.header.nameJa : inn.header.nameJa;
+const innName = pickText(
+  lang,
+  inn.header.nameJa,
+  inn.header.nameEn,
+  inn.header.nameZh,
+);
 
 const pageTitle = `${innName} | ${d.siteName}`;
 const pageDesc =
-  lang === 'en' ? `In-house guide for ${innName}` : `${innName} の館内案内`;
+  lang === 'en'
+    ? `In-house guide for ${innName}`
+    : lang === 'zh'
+      ? `${innName} 的客房指南`
+      : `${innName} の館内案内`;
 
-const altHref = altLangPath(inn.slug, lang);
+const headerLinks = langLinks(inn.slug, lang);
 
 const hasInfo = inn.info.some((it) => it.isVisible);
 
@@ -35,7 +43,7 @@ const visibleSections = SECTIONS.filter((s) => hasSectionContent(inn, s));
 ---
 
 <BaseLayout title={pageTitle} description={pageDesc} lang={lang}>
-  <Header inn={inn} lang={lang} altHref={altHref} />
+  <Header inn={inn} lang={lang} langLinks={headerLinks} />
 
   <main class="pb-8">
     {/* Wi-Fi（デフォルト背景） */}
@@ -67,7 +75,7 @@ const visibleSections = SECTIONS.filter((s) => hasSectionContent(inn, s));
       <section class="mx-auto max-w-screen-md mt-8">
         <header class="mb-4 px-4 sm:px-0">
           <h3 class="text-xl sm:text-2xl font-semibold text-[color:var(--color-ink)] leading-tight">
-            {lang === 'en' ? 'Information' : 'インフォメーション'}
+            {d.sections.info}
           </h3>
         </header>
         <InfoSection items={inn.info} lang={lang} showTitle={false} />
