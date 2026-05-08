@@ -3,9 +3,9 @@ import { SECTIONS } from "../lib/types";
 
 /**
  * ダミー宿データ。
- * 将来 microCMS / R2 等から取得するときは、この配列を返す関数
- * (`getAllInns`, `getInnBySlug`) のみ差し替えれば、
- * 各 .astro コンポーネントは触らずに済む構成にしている。
+ * 将来 microCMS / R2 等から取得するときは、この `inns` の供給元
+ * （または `getAllInns` / `innStaticPaths` / `sectionStaticPaths` の中身）
+ * を差し替えれば、各 .astro コンポーネントは触らずに済む構成にしている。
  */
 export const inns: Inn[] = [
   {
@@ -306,10 +306,6 @@ export function getAllInns(): Inn[] {
   return inns;
 }
 
-export function getInnBySlug(slug: string): Inn | undefined {
-  return inns.find((inn) => inn.slug === slug);
-}
-
 /**
  * 指定の宿で、そのセクションが表示すべきコンテンツを持っているかを返す。
  * 繰り返し型: isVisible なアイテムが 1 つ以上あるか。
@@ -330,16 +326,33 @@ export function hasSectionContent(inn: Inn, section: Section): boolean {
 }
 
 /**
- * `getStaticPaths` 用。全宿 × コンテンツのある全セクションの
- * (slug, section) を列挙する。
+ * 宿トップページ（`/g/[slug]/`）用の `getStaticPaths` エントリ。
+ * `props.inn` でページ側に Inn を渡し、ルックアップを不要にする。
  */
-export function getAllSectionParams(): {
-  slug: string;
-  section: Section;
-}[] {
+export function innStaticPaths(): Array<{
+  params: { slug: string };
+  props: { inn: Inn };
+}> {
+  return inns.map((inn) => ({
+    params: { slug: inn.slug },
+    props: { inn },
+  }));
+}
+
+/**
+ * セクションページ（`/g/[slug]/[section]/`）用の `getStaticPaths` エントリ。
+ * 表示すべきコンテンツがあるセクションだけを列挙する。
+ */
+export function sectionStaticPaths(): Array<{
+  params: { slug: string; section: Section };
+  props: { inn: Inn; section: Section };
+}> {
   return inns.flatMap((inn) =>
     SECTIONS.filter((section) => hasSectionContent(inn, section)).map(
-      (section) => ({ slug: inn.slug, section }),
+      (section) => ({
+        params: { slug: inn.slug, section },
+        props: { inn, section },
+      }),
     ),
   );
 }

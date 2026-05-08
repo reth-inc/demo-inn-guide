@@ -28,9 +28,9 @@
 宿のすべてのコンテンツは **`src/data/inns.ts`** に集約している。
 
 - `inns: Inn[]` が単一の真実の源（SoT）。型は `src/lib/types.ts` の `Inn`
-- ページからは `getAllInns()` / `getInnBySlug(slug)` 経由で参照
-- 宿を追加: `inns` に `Inn` を 1 件追加するだけで、`/g/<slug>/` と `/g/<slug>/en/` および各セクションページが `getStaticPaths` 経由で自動生成される
-- 将来 microCMS / R2 などに切り替えるときは `getAllInns` / `getInnBySlug` の中身だけ差し替える（各 `.astro` は無修正）
+- ページの `getStaticPaths` は `innStaticPaths()` / `sectionStaticPaths()` を返し、`Astro.props` で `inn`（セクションページの場合は `section` も）を受け取る。宿一覧などで全件が必要なら `getAllInns()`
+- 宿を追加: `inns` に `Inn` を 1 件追加するだけで、`/g/<slug>/` / `/en/` / `/zh/` および各セクションページが自動生成される
+- 将来 microCMS / R2 などに切り替えるときは、`inns` の供給（または `getAllInns` / `innStaticPaths` / `sectionStaticPaths`）の中身を差し替えれば、各 `.astro` は無修正
 
 ## 規約
 
