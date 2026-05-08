@@ -20,9 +20,9 @@ export default [
   },
   {
     // Astro が自動生成する型参照ファイルではトリプルスラッシュが必須
-    files: ['**/*.d.ts'],
+    files: ["**/*.d.ts"],
     rules: {
-      '@typescript-eslint/triple-slash-reference': 'off',
+      "@typescript-eslint/triple-slash-reference": "off",
     },
   },
 ];

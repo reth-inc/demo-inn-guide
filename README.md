@@ -2,7 +2,7 @@
 
 宿泊者向けの館内案内サイトを Astro + Tailwind CSS で組んだ静的サンプルです。
 QR から飛んだスマホで Wi-Fi、お時間案内、サービス、周辺情報、FAQ などを
-日本語 / 英語で閲覧できることを想定しています。
+日本語 / 英語 / 中国語（簡体字）で閲覧できることを想定しています。
 
 > このリポジトリは **静的サンプル** です。CMS / Cloudflare / R2 とは未連携で、
 > ダミーデータからページを生成します。
@@ -42,18 +42,24 @@ npm run dev:lan
 そのほかのコマンド:
 
 ```bash
-npm run build     # 静的ビルド（dist/ に出力）
-npm run preview   # ビルド済みサイトのプレビュー
-npm run check     # astro check による型・テンプレート検査
+npm run build         # 静的ビルド（dist/ に出力）
+npm run preview       # ビルド済みサイトのプレビュー
+npm run check         # astro check による型・テンプレート検査
+npm run format        # Prettier で整形
+npm run format:check  # Prettier の差分チェック（CI 用）
+npm run lint          # ESLint
+npm run lint:fix      # ESLint の自動修正
 ```
 
 ## ページ構成
 
-- `/` — 宿一覧（デモトップ。ja / en へのリンク）
+- `/` — 宿一覧（デモトップ。ja / en / zh へのリンク）
 - `/g/[slug]/` — 宿詳細（日本語）
 - `/g/[slug]/en/` — 宿トップ（英語）
+- `/g/[slug]/zh/` — 宿トップ（中国語）
 - `/g/[slug]/[section]/` — セクションページ（日本語）
 - `/g/[slug]/en/[section]/` — セクションページ（英語）
+- `/g/[slug]/zh/[section]/` — セクションページ（中国語）
 
 `getStaticPaths()` で `src/data/inns.ts` の各宿に対して静的に生成しています。
 
@@ -83,8 +89,10 @@ npm run check     # astro check による型・テンプレート検査
 
 - http://localhost:4321/g/iriyamato/
 - http://localhost:4321/g/iriyamato/en/
+- http://localhost:4321/g/iriyamato/zh/
 - http://localhost:4321/g/iriyamato/services/
 - http://localhost:4321/g/iriyamato/en/faq/
+- http://localhost:4321/g/iriyamato/zh/area/
 
 ## ディレクトリ構成
 
@@ -100,9 +108,10 @@ src/
     inns.ts      # ダミー宿データ + getAllInns / getInnBySlug
                  # + hasSectionContent / getAllSectionParams
   lib/
-    types.ts     # Inn / 各セクションの型 + SECTIONS / Section
-    i18n.ts      # UI 文言の辞書
-    helpers.ts   # pickText / visibleSorted / innPath / sectionPath / altSectionPath
+    types.ts     # Inn / 各セクションの型 + SECTIONS / Section / Lang
+    i18n.ts      # UI 文言の辞書（ja / en / zh）
+    helpers.ts   # pickText / visibleSorted / innPath / sectionPath
+                 # + langLinks / sectionLangLinks
   pages/
     index.astro
     g/[slug]/
@@ -111,6 +120,9 @@ src/
       en/
         index.astro                # /g/[slug]/en/           en 宿トップ
         [section]/index.astro      # /g/[slug]/en/[section]/ en セクションページ
+      zh/
+        index.astro                # /g/[slug]/zh/           zh 宿トップ
+        [section]/index.astro      # /g/[slug]/zh/[section]/ zh セクションページ
   styles/
     global.css   # Tailwind v4 + テーマトークン
 ```
@@ -128,7 +140,7 @@ src/
 ### 新しい宿を追加する
 
 `src/data/inns.ts` の `inns` 配列に新しい宿オブジェクトを追加するだけで、
-`/g/<slug>/` と `/g/<slug>/en/` の両ページが自動生成されます。
+`/g/<slug>/`、`/g/<slug>/en/`、`/g/<slug>/zh/` の各ページが自動生成されます。
 
 ```ts
 export const inns: Inn[] = [
@@ -137,7 +149,7 @@ export const inns: Inn[] = [
   // 追加
   {
     slug: "my-new-inn",
-    header: { nameJa: "新しい宿", nameEn: "My New Inn" },
+    header: { nameJa: "新しい宿", nameEn: "My New Inn", nameZh: "新酒店" },
     wifi: { ssid: "my-wifi", password: "pass-1234" },
     floorMap: {
       /* ... */
@@ -164,7 +176,7 @@ export const inns: Inn[] = [
 
 を持ちます。`isVisible: false` の項目は表示されません。
 
-英語フィールドが空のときは日本語にフォールバックします（`src/lib/helpers.ts` の `pickText`）。
+英語・中国語フィールドが空のときは日本語にフォールバックします（`src/lib/helpers.ts` の `pickText`）。
 
 ## 主要コンポーネントの責務
 
@@ -173,7 +185,7 @@ export const inns: Inn[] = [
 | `layout/BaseLayout.astro`        | `<html>` / `<head>` / 共通スタイルロード                                                     |
 | `layout/Header.astro`            | 上部固定の宿名表示 + 言語切替                                                                |
 | `layout/Footer.astro`            | 住所・電話・メール・SNS リンク                                                               |
-| `layout/LanguageSwitcher.astro`  | ja ↔ en の URL を切り替えるリンク                                                            |
+| `layout/LanguageSwitcher.astro`  | ja / en / zh の言語切り替え（現在言語をハイライト）                                          |
 | `layout/InnPage.astro`           | 宿トップ（ハブ）。Wi-Fi + 各セクションへの導線カードを並べる                                 |
 | `layout/SectionPage.astro`       | セクションページの共通レイアウト。`section` プロップで内容を切替                             |
 | `layout/SectionLinkCard.astro`   | 宿トップに並べる、各セクションページへのリンクカード（アイコン + タイトル + 説明 + chevron） |
@@ -210,7 +222,7 @@ export const inns: Inn[] = [
 2. 各 `.astro` の `getStaticPaths()` がこれらの関数を呼ぶだけなので、
    コンポーネント側は無修正
 3. `Inn` 型に合わせて microCMS のスキーマを設計するのが楽
-   （`titleJa` / `titleEn` のように 1 件で多言語フィールドを持つ）
+   （`titleJa` / `titleEn` / `titleZh` のように 1 件で多言語フィールドを持つ）
 4. Cloudflare Pages へのビルド時に webhook でリビルドさせるか、
    ISR/SSR が必要なら Astro の `output: 'server'` + Cloudflare adapter を導入
 
