@@ -151,9 +151,6 @@ export const inns: Inn[] = [
     slug: "my-new-inn",
     header: { nameJa: "新しい宿", nameEn: "My New Inn", nameZh: "新酒店" },
     wifi: { ssid: "my-wifi", password: "pass-1234" },
-    floorMap: {
-      /* ... */
-    },
     footer: {
       /* ... */
     },
@@ -190,7 +187,6 @@ export const inns: Inn[] = [
 | `layout/SectionPage.astro`       | セクションページの共通レイアウト。`section` プロップで内容を切替                             |
 | `layout/SectionLinkCard.astro`   | 宿トップに並べる、各セクションページへのリンクカード（アイコン + タイトル + 説明 + chevron） |
 | `sections/WifiSection.astro`     | SSID / パスワード表示。タップで選択可能                                                      |
-| `sections/MapSection.astro`      | 館内図（画像 + PDF）。両方なければ非表示                                                     |
 | `sections/TimesSection.astro`    | チェックイン等のお時間案内一覧                                                               |
 | `sections/ServicesSection.astro` | サービス案内 / 追加案内一覧（PDF ボタン付き）                                                |
 | `sections/AreaSection.astro`     | 周辺情報一覧（タグ + 地図リンク）                                                            |
