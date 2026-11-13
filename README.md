@@ -91,12 +91,12 @@ npm run lint:fix      # ESLint の自動修正
 
 サンプル URL（ローカル開発時）:
 
-- http://localhost:4321/g/iriyamato/
-- http://localhost:4321/g/iriyamato/en/
-- http://localhost:4321/g/iriyamato/zh/
-- http://localhost:4321/g/iriyamato/services/
-- http://localhost:4321/g/iriyamato/en/faq/
-- http://localhost:4321/g/iriyamato/zh/area/
+- http://localhost:4321/g/sumayado/
+- http://localhost:4321/g/sumayado/en/
+- http://localhost:4321/g/sumayado/zh/
+- http://localhost:4321/g/sumayado/services/
+- http://localhost:4321/g/sumayado/en/faq/
+- http://localhost:4321/g/sumayado/zh/area/
 
 ## ディレクトリ構成
 
@@ -149,7 +149,7 @@ src/
 ```ts
 export const inns: Inn[] = [
   // 既存
-  { slug: "iriyamato" /* ... */ },
+  { slug: "sumayado" /* ... */ },
   // 追加
   {
     slug: "my-new-inn",

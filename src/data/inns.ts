@@ -9,14 +9,14 @@ import { SECTIONS } from "../lib/types";
  */
 export const inns: Inn[] = [
   {
-    slug: "iriyamato",
+    slug: "sumayado",
     header: {
-      nameJa: "入山登",
-      nameEn: "Iriyamato",
-      nameZh: "入山登",
+      nameJa: "スマ宿",
+      nameEn: "Sumayado",
+      nameZh: "スマ宿",
     },
     wifi: {
-      ssid: "iriyamato-guest",
+      ssid: "sumayado-guest",
       password: "welcome2026",
     },
     footer: {
