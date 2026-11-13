@@ -41,7 +41,7 @@
 - **`info` は SECTIONS 外の例外**: 専用セクションページを持たず、宿トップに直接フィーチャー表示する
 - **館内図は専用フィールドを持たない**: `additional` 内の 1 アイテムとして `imageUrl` + `pdfUrl` で登録する（スキーマをフラットに保ち、CMS 移行時もアイテム追加だけで済むため）
 - **URL 構築は手書きせず** `innPath` / `sectionPath` を使う。言語スイッチャーに渡すリンク列挙は `langLinks` / `sectionLangLinks`（いずれも `src/lib/helpers.ts`）
-- **trailing slash は必須**: `/g/iriyamato/` の形（末尾 `/` あり）で書く
+- **trailing slash は必須**: `/g/sumayado/` の形（末尾 `/` あり）で書く
 - **UI 文言の辞書**は `src/lib/i18n.ts`。固定ラベル（チェックイン/Wi-Fi 等）はここに置く
 
 ## レイヤー
