@@ -29,7 +29,7 @@ description: ローカルの変更内容(working tree または指定範囲)を�
 - **空セクション**: 表示アイテム 0 のとき `hasSectionContent` で除外する仕組みを踏襲しているか
 - **館内図**: 専用フィールドではなく `additional` 配列の 1 アイテムとして扱っているか
 - **URL ヘルパー**: `innPath` / `sectionPath` / `altLangPath` / `altSectionPath` を使っているか(`/g/${slug}/` のような手書き連結になっていないか)
-- **trailing slash**: 末尾 `/` を維持しているか(`/g/iriyamato/` 形)
+- **trailing slash**: 末尾 `/` を維持しているか(`/g/sumayado/` 形)
 - **UI 文言**: 固定ラベル(チェックイン、Wi-Fi 等)は `src/lib/i18n.ts` を経由しているか
 
 ### 3. 公開リポジトリ前提のトーン

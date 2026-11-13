@@ -13,7 +13,7 @@ export const inns: Inn[] = [
     header: {
       nameJa: "スマ宿",
       nameEn: "Sumayado",
-      nameZh: "スマ宿",
+      nameZh: "",
     },
     wifi: {
       ssid: "sumayado-guest",
@@ -24,9 +24,9 @@ export const inns: Inn[] = [
       addressEn: "1234 Hokujo, Hakuba-mura, Nagano 399-9301, Japan",
       addressZh: "〒399-9301 日本长野县北安昙郡白马村大字北城 1234",
       phone: "0261-00-0000",
-      email: "info@iriyamato.example.com",
-      instagramUrl: "https://instagram.com/iriyamato_example",
-      lineUrl: "https://line.me/R/ti/p/@iriyamato",
+      email: "info@sumayado.example.com",
+      instagramUrl: "https://sumayado.example.com/instagram/",
+      lineUrl: "https://sumayado.example.com/line/",
     },
     times: [
       {
@@ -118,7 +118,7 @@ export const inns: Inn[] = [
         bodyEn:
           "Pick-up from the nearest station is available with prior reservation.",
         bodyZh: "提供从最近车站的接送服务，请提前联系我们。",
-        pdfUrl: "https://example.com/iriyamato/shuttle.pdf",
+        pdfUrl: "https://example.com/sumayado/shuttle.pdf",
       },
       {
         order: 40,
@@ -141,8 +141,8 @@ export const inns: Inn[] = [
           "Layout of each floor. See where the baths and dining hall are located.",
         bodyZh: "各楼层的布局图。可查看浴池和餐厅的位置。",
         imageUrl:
-          "https://placehold.co/1200x800/e7e2d8/8a7a5c?text=Iriyamato+Floor+Map",
-        pdfUrl: "https://example.com/iriyamato/floor-map.pdf",
+          "https://placehold.co/1200x800/e7e2d8/8a7a5c?text=Sumayado+Floor+Map",
+        pdfUrl: "https://example.com/sumayado/floor-map.pdf",
       },
       {
         order: 10,
